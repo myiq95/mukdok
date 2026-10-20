@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f1efe9">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="묵독">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="description" content="묵독 — 조용히, 한 페이지씩 읽는 오프라인 독서 앱">
+  <title>묵독</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" sizes="180x180" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAWfmNhQlgAABZ+anVtYgAAAB5qdW1kYzJwYQARABCAAACqADibcQNjMnBhAAAAFlhqdW1iAAAAR2p1bWRjMm1hABEAEIAAAKoAOJtxA3VybjpjMnBhOjNhMTlkNGZhLWJjZTUtNDc4Yi1hMzEwLTI2ZWU4OGI3YWVjYwAAAAOTanVtYgAAAClqdW1kYzJhcwARABCAAACqADibcQNjMnBhLmFzc2VydGlvbnMAAAAAuGp1bWIAAABEanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5pbmdyZWRpZW50LnYzAAAAABhjMnNopzpU/IF76AqnZ+ju+k+/QgAAAGxjYm9yo2lkYzpmb3JtYXRpaW1hZ2UvcG5namluc3RhbmNlSUR4LHhtcDppaWQ6NTE4NTkxMDAtZGVhNi00MWQ3LWIyMTctOTNmMDc0NWVmMmIzbHJlbGF0aW9uc2hpcGhwYXJlbnRPZgAAAeJqdW1iAAAAQWp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuYWN0aW9ucy52MgAAAAAYYzJzaGi+81UN9hdC4CuB9V1SehwAAAGZY2JvcqJnYWN0aW9uc4KiZmFjdGlvbmtjMnBhLm9wZW5lZGpwYXJhbWV0ZXJzoWtpbmdyZWRpZW50c4GiY3VybHgtc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5pbmdyZWRpZW50LnYzZGhhc2hYIKoGSAJNp9RNXTnGz9n6zQPv3wB1/8+2ibTaz6ic+aYzpGZhY3Rpb254HWNvbS5hbnRocm9waWMuY2xhdWRlLnByb3ZpZGVkanBhcmFtZXRlcnOheB9jb20uYW50aHJvcGljLm9yaWdpbi1jb25maWRlbmNlZ3Vua25vd25rZGVzY3JpcHRpb254ZkNsYXVkZSBwcm92aWRlZCB0aGlzIGZpbGUgYXQgdGhlIHJlcXVlc3Qgb2YgYSB1c2VyIGFuZCBtYXkgaGF2ZSBjcmVhdGVkIG9yIG1vZGlmaWVkIHRoZSBmaWxlIGNvbnRlbnRzLm1zb2Z0d2FyZUFnZW50oWRuYW1lZkNsYXVkZXJhbGxBY3Rpb25zSW5jbHVkZWT1AAAAyGp1bWIAAABAanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5oYXNoLmRhdGEAAAAAGGMyc2gTy34olDFXjy6LSZUIwgKZAAAAgGNib3KlY2FsZ2ZzaGEyNTZjcGFkTQAAAAAAAAAAAAAAAABkaGFzaFggw6/CkaIPOza4slr3UU+BMtB6BAIlQlvQnYqpg9sOS6tkbmFtZW5qdW1iZiBtYW5pZmVzdGpleGNsdXNpb25zgaJlc3RhcnQYIWZsZW5ndGgZFooAAAI+anVtYgAAACdqdW1kYzJjbAARABCAAACqADibcQNjMnBhLmNsYWltLnYyAAAAAg9jYm9ypWNhbGdmc2hhMjU2aXNpZ25hdHVyZXhNc2VsZiNqdW1iZj0vYzJwYS91cm46YzJwYTozYTE5ZDRmYS1iY2U1LTQ3OGItYTMxMC0yNmVlODhiN2FlY2MvYzJwYS5zaWduYXR1cmVqaW5zdGFuY2VJRHgseG1wOmlpZDo4MDE5NTUyZi1kOGU1LTQyM2EtODg5Yy1mOWJiOTRjM2RmZDhyY3JlYXRlZF9hc3NlcnRpb25zg6JjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFggqgZIAk2n1E1dOcbP2frNA+/fAHX/z7aJtNrPqJz5pjOiY3VybHgqc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5hY3Rpb25zLnYyZGhhc2hYIMvNEDO/NydzobbQM7mWXk9ytfQjCLlkGnyqIdne4yu0omN1cmx4KXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaGFzaC5kYXRhZGhhc2hYIEtQZdGzJGa/l2ef5+VhtMVjEtmhakWEdZlbu9tkU1E8dGNsYWltX2dlbmVyYXRvcl9pbmZvo2RuYW1lb0FudGhyb3BpYyBGaWxlc2d2ZXJzaW9uZTEuMC4wa3NwZWNWZXJzaW9uZTIuNC4wAAAQOGp1bWIAAAAoanVtZGMyY3MAEQAQgAAAqgA4m3EDYzJwYS5zaWduYXR1cmUAAAAQCGNib3LShFkCEqIBJhghWQIKMIICBjCCAY2gAwIBAgIUQOWgCu7COdC+uIP6BkIFPWdVEwAwCgYIKoZIzj0EAwMwSTEXMBUGA1UEChMOQW50aHJvcGljLCBQQkMxLjAsBgNVBAMTJUFudGhyb3BpYyBDb250ZW50IENyZWRlbnRpYWxzIFJvb3QgQ0EwHhcNMjYwODA3MTg0MzU2WhcNMjgwODA2MTk0MzU2WjBEMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEpMCcGA1UEAxMgQW50aHJvcGljIENsYXVkZSBDb250ZW50IFNpZ25pbmcwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAASYegpry1AYBRTVNL1CpTlbROnY3dey+UrsF9C3phYrATN3ZHf93Mo8RQN0KOUuOn19P4oWNFWe5n2/She9N7eTo1gwVjAOBgNVHQ8BAf8EBAMCB4AwFQYDVR0lBA4wDAYKKwYBBAGD6F4CATAMBgNVHRMBAf8EAjAAMB8GA1UdIwQYMBaAFM5R4gSBTmRbI/jjxM+aPpzB11zCMAoGCCqGSM49BAMDA2cAMGQCMDFzHRSeAXrSy1WOzkbhPZ6Km2wGTmZ/2gK18k8BQGXyqz88Rdrz6CTX9flAnYNVxgIwcF9c3fVhqmJKpi+UhasNUMko69cyX6STPfta3Q8EjyzDjzoyrol46FP6VFHhvUcJoWNwYWRZDZ4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA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">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-theme="ivory" data-font="gothic">
+
+  <div id="prog" aria-hidden="true"></div>
+  <div id="running" aria-hidden="true"></div>
+
+  <!-- 초기 화면: 개인 정보(읽은 책, 권수, 읽기 기록)는 여기에 표시하지 않습니다 -->
+  <section id="home" class="view active" aria-label="묵독 시작 화면">
+    <div class="home-art" aria-hidden="true">
+      <svg viewBox="0 0 280 230" fill="none">
+        <defs>
+          <radialGradient id="wash" cx="50%" cy="50%" r="50%">
+            <stop offset="0" stop-color="#2f4b7c" stop-opacity=".2"/>
+            <stop offset=".6" stop-color="#2f4b7c" stop-opacity=".06"/>
+            <stop offset="1" stop-color="#2f4b7c" stop-opacity="0"/>
+          </radialGradient>
+          <filter id="brush" x="-20%" y="-20%" width="140%" height="140%">
+            <feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="7" result="n"/>
+            <feDisplacementMap in="SourceGraphic" in2="n" scale="10"/>
+          </filter>
+        </defs>
+        <ellipse cx="140" cy="118" rx="118" ry="92" fill="url(#wash)" filter="url(#brush)"/>
+        <path class="art-moon" d="M212.76 34.02A18 18 0 1 0 229.48 56.3A14 14 0 1 1 212.76 34.02Z"/>
+        <g class="art-dots"><circle cx="66" cy="62" r="2"/><circle cx="88" cy="44" r="1.5"/><circle cx="104" cy="66" r="1.8"/></g>
+        <path class="art-page" d="M40 118C70 98 104 96 136 110V186C104 174 70 176 40 194Z"/>
+        <path class="art-page" d="M240 118C210 98 176 96 144 110V186C176 174 210 176 240 194Z"/>
+        <path class="art-line" d="M140 110V186"/>
+        <g class="art-text">
+          <path d="M56 130C78 122 106 121 124 127"/>
+          <path d="M56 143C80 136 104 135 124 140"/>
+          <path d="M56 156C78 150 100 149 116 153"/>
+          <path d="M160 127C178 121 202 122 224 130"/>
+          <path d="M160 140C180 135 202 136 224 143"/>
+          <path d="M160 153C178 149 198 150 212 156"/>
+        </g>
+        <path class="art-ribbon" d="M178 102V150L184 143L190 150V102Z"/>
+        <path class="art-ground" d="M62 204C110 210 170 210 218 204"/>
+      </svg>
+    </div>
+
+    <div class="home-name">
+      <h1 class="home-title">묵독</h1>
+      <p class="home-tag">조용히, 한 페이지씩</p>
+    </div>
+
+    <div class="home-cta">
+      <button class="home-primary" id="home-library">
+        <span class="home-ico" data-icon="books" aria-hidden="true"></span><span>서재로 들어가기</span>
+      </button>
+      <div class="home-sec">
+        <button class="home-link" id="home-open">
+          <span class="home-ico" data-icon="folder" aria-hidden="true"></span><span>파일 열기</span>
+        </button>
+        <button class="home-link" id="home-paste">
+          <span class="home-ico" data-icon="paste" aria-hidden="true"></span><span>텍스트 붙여넣기</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 서재 목록 -->
+  <section id="library" class="view" aria-label="서재">
+    <header class="top">
+      <div class="top-l">
+        <button class="ico" id="btn-home" data-icon="back" aria-label="처음 화면" title="처음 화면"></button>
+        <h1 class="brand">서재</h1>
+      </div>
+      <div class="actions">
+        <button class="ico" id="btn-paste" data-icon="paste" aria-label="텍스트 붙여넣기" title="텍스트 붙여넣기"></button>
+        <button class="ico" id="btn-open-lib" data-icon="folder" aria-label="파일 열기" title="파일 열기"></button>
+      </div>
+    </header>
+    <nav class="filters" id="filters" aria-label="필터">
+      <button class="on" data-filter="all">전체</button>
+      <button data-filter="reading">읽는 중</button>
+      <button data-filter="done">완독</button>
+    </nav>
+    <main id="shelf"></main>
+    <p class="hint">Safari 공유 버튼 › ‘홈 화면에 추가’로 앱처럼 설치할 수 있어요</p>
+  </section>
+
+  <!-- 읽기 -->
+  <section id="reader" class="view" aria-label="읽기">
+    <article id="page">
+      <header id="book-head">
+        <h1 id="book-title"></h1>
+      </header>
+      <div id="text"></div>
+      <p class="end">· · ·</p>
+    </article>
+  </section>
+
+  <!-- 자동숨김 아이콘 메뉴 -->
+  <nav id="bar" class="hidden" aria-label="읽기 메뉴">
+    <button class="ico" data-act="library" data-icon="back" aria-label="서재" title="서재"></button>
+    <button class="ico" data-act="toc" data-icon="list" aria-label="목차" title="목차"></button>
+    <button class="ico" data-act="open" data-icon="folder" aria-label="파일 열기" title="파일 열기"></button>
+    <button class="ico" id="btn-bm" data-act="bm" data-icon="bookmark" aria-label="책갈피" title="책갈피"></button>
+    <button class="ico" id="btn-tts" data-act="tts" data-icon="speaker" aria-label="음성 읽기" title="음성 읽기"></button>
+    <button class="ico" data-act="settings" data-icon="sliders" aria-label="설정" title="설정"></button>
+    <button class="ico" id="btn-night" data-act="night" data-icon="moon" aria-label="나이트 모드" title="나이트 모드"></button>
+  </nav>
+
+  <div id="scrim"></div>
+
+  <!-- 목차 / 책갈피 패널 -->
+  <aside id="toc" aria-label="목차와 책갈피">
+    <div class="panel-head">
+      <div class="seg" id="toc-tabs">
+        <button class="on" data-tab="toc">목차</button>
+        <button data-tab="bm">책갈피</button>
+      </div>
+      <button class="ico sm" data-close data-icon="close" aria-label="닫기" title="닫기"></button>
+    </div>
+    <p id="toc-note" class="note"></p>
+    <div id="toc-list" class="list"></div>
+    <div id="bm-list" class="list" hidden></div>
+  </aside>
+
+  <!-- 설정 시트 -->
+  <section id="sheet" aria-label="읽기 설정">
+    <div class="grip"></div>
+    <div class="sheet-head">
+      <h2>읽기 설정</h2>
+      <button class="ico sm" data-close data-icon="close" aria-label="닫기" title="닫기"></button>
+    </div>
+    <div class="preview" aria-hidden="true">
+      <p class="preview-text">달빛이 창가에 내려앉은 밤, 책장 넘기는 소리만 방 안을 채웠다.</p>
+    </div>
+    <div class="group">
+      <div class="row">
+        <span>글꼴</span>
+        <div class="seg">
+          <button data-set="font:gothic">고딕</button>
+          <button data-set="font:myeongjo">명조</button>
+        </div>
+      </div>
+      <div class="row">
+        <span>글자 크기</span>
+        <div class="ctl">
+          <input id="s-size" type="range" min="14" max="28" step="1" aria-label="글자 크기">
+          <output id="o-size" class="val"></output>
+        </div>
+      </div>
+      <div class="row">
+        <span>자간</span>
+        <div class="ctl">
+          <input id="s-ls" type="range" min="-0.02" max="0.12" step="0.01" aria-label="자간">
+          <output id="o-ls" class="val"></output>
+        </div>
+      </div>
+      <div class="row">
+        <span>화면</span>
+        <div class="seg">
+          <button data-set="theme:light">흰 종이</button>
+          <button data-set="theme:ivory">한지</button>
+          <button data-set="theme:night">밤</button>
+        </div>
+      </div>
+    </div>
+    <div class="group">
+      <div class="row">
+        <span>읽어 줄 음성</span>
+        <select id="s-voice" aria-label="음성 선택"></select>
+      </div>
+      <div class="row">
+        <span>읽기 속도</span>
+        <div class="ctl">
+          <input id="s-rate" type="range" min="0.6" max="1.6" step="0.1" aria-label="읽기 속도">
+          <output id="o-rate" class="val"></output>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 텍스트 붙여넣기 -->
+  <div id="modal" class="modal" hidden>
+    <div class="card" role="dialog" aria-label="텍스트 붙여넣기">
+      <h2>텍스트 붙여넣기</h2>
+      <input id="paste-title" placeholder="제목 (비우면 첫 줄을 써요)" maxlength="60">
+      <textarea id="paste-text" placeholder="본문을 붙여넣어 주세요"></textarea>
+      <div class="end-row">
+        <button class="txt" id="paste-cancel">취소</button>
+        <button class="txt strong" id="paste-ok">서재에 추가</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="busy" hidden><div class="spin"></div><p id="busy-msg"></p></div>
+  <div id="toast" role="status"></div>
+
+  <input id="file" class="sr" type="file" accept=".txt,.md,.markdown,.html,.htm,.docx,.pdf,.epub">
+
+  <script src="app.js" defer></script>
+</body>
+</html>
