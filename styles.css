@@ -238,7 +238,12 @@ body:not(.reading) #running { display: none; }
   overflow-wrap: break-word;
 }
 #text p { margin: 0 0 1.1em; }
-#text .dlg { padding-left: .95em; border-left: 2px solid var(--accent); }
+/* 대사: 지문과 행을 나누고, 왼쪽 강조선과 굵기로 구분 */
+#text .dlg {
+  margin: 0 0 1.1em; padding-left: .95em;
+  border-left: 2px solid var(--accent);
+  font-weight: 500;
+}
 #text h2.ch {
   margin: 3.4em 0 1.4em; text-align: center;
   font-family: var(--serif); font-weight: 700; font-size: 1.16em; line-height: 1.5;

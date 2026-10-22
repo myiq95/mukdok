@@ -251,6 +251,81 @@
     return { blocks };
   }
 
+  /* ================= 대사 구분 ================= */
+  // 여는 기호 → 닫는 기호. 따옴표 안의 따옴표(중첩)도 짝을 맞춥니다.
+  const QUOTE_PAIRS = new Map([['“', '”'], ['"', '"'], ['‘', '’'], ['「', '」'], ['『', '』']]);
+  // 앞 문단에서 이어진 대사의 끝 기호 (아포스트로피 ’ 는 여기서 제외합니다)
+  const STRAY_CLOSERS = new Set(['”', '」', '』']);
+  // 닫는 따옴표 뒤의 인용 어미: “안녕”이라고 그가 말했다
+  const QUOTE_TAIL = /^(?:이라고|라고|이라며|라며|이라는|라는|이며|이고|고|며)(?=[\s.,!?…]|$)/;
+
+  // 한 문단을 지문과 대사 조각으로 나눕니다. 대사는 여는 기호부터 짝이 되는 닫는 기호까지입니다.
+  function splitSegments(text) {
+    const segs = [];
+    const stack = [];   // 열린 따옴표의 기대 닫는 기호 (중첩 대응)
+    let buf = '';
+    const flush = (dialog) => {
+      const t = buf.trim();
+      if (t) segs.push({ x: t, d: dialog });
+      buf = '';
+    };
+    for (let i = 0; i < text.length; i++) {
+      const ch = text[i];
+      if (stack.length) {
+        buf += ch;
+        if (ch === stack[stack.length - 1]) {
+          stack.pop();
+          if (!stack.length) {
+            const tail = QUOTE_TAIL.exec(text.slice(i + 1));
+            if (tail) { buf += tail[0]; i += tail[0].length; }
+            flush(true);
+          }
+        } else if (QUOTE_PAIRS.has(ch) && QUOTE_PAIRS.get(ch) !== ch) {
+          stack.push(QUOTE_PAIRS.get(ch));
+        }
+        continue;
+      }
+      if (QUOTE_PAIRS.has(ch)) {
+        flush(false);
+        buf = ch;
+        stack.push(QUOTE_PAIRS.get(ch));
+      } else if (STRAY_CLOSERS.has(ch) && segs.length === 0) {
+        // 문단 맨 앞의 닫는 기호: 앞 문단에서 이어진 대사의 끝입니다.
+        buf += ch;
+        const tail = QUOTE_TAIL.exec(text.slice(i + 1));
+        if (tail) { buf += tail[0]; i += tail[0].length; }
+        flush(true);
+      } else {
+        buf += ch;
+      }
+    }
+    flush(stack.length > 0);   // 닫히지 않은 대사는 문단 끝까지 대사로 봅니다
+    return segs;
+  }
+
+  // 문단 목록에서 대사 행을 나눕니다. map[옛 인덱스] = 새 인덱스 (읽기 위치·책갈피 이동용)
+  function splitDialogueBlocks(blocks) {
+    const out = [];
+    const map = [];
+    for (const b of blocks) {
+      map.push(out.length);
+      if (b.t !== 'p') { out.push({ ...b }); continue; }
+      const segs = splitSegments(b.x);
+      if (!segs.length) { out.push({ t: 'p', x: b.x, d: false }); continue; }
+      for (const s of segs) out.push({ t: 'p', x: s.x, d: s.d });
+    }
+    return { blocks: out, map };
+  }
+
+  // 예전 방식으로 저장된 책은 열 때 한 번만 대사를 나누고, 읽기 위치와 책갈피를 새 위치로 옮깁니다.
+  function upgradeContent(meta, content) {
+    if (content.v === 2) return { blocks: content.blocks, meta, changed: false };
+    const { blocks, map } = splitDialogueBlocks(content.blocks);
+    const at = (i) => map[Math.min(Math.max(i || 0, 0), map.length - 1)] || 0;
+    const next = { ...meta, idx: at(meta.idx), bm: (meta.bm || []).map((b) => ({ ...b, i: at(b.i) })) };
+    return { blocks, meta: next, changed: true };
+  }
+
   /* ================= 목차(제목) 자동 인식 ================= */
   const KNUM = '일이삼사오육칠팔구십백천만억영〇零';
   const HEAD_RES = [
@@ -277,9 +352,9 @@
   function finalize(raw) {
     const out = [];
     let last = null;
-    for (const b of raw) {
+    for (const b of splitDialogueBlocks(raw).blocks) {
       let blk = b;
-      if (blk.t === 'p' && isHeadingLike(blk.x)) blk = { t: 'h', x: blk.x.replace(/^#{1,6}\s*/, ''), l: 2 };
+      if (blk.t === 'p' && !blk.d && isHeadingLike(blk.x)) blk = { t: 'h', x: blk.x.replace(/^#{1,6}\s*/, ''), l: 2 };
       if (blk.t === 'h') {
         const n = numOf(blk.x);
         if (last && n && n === last.n && out.length - last.pos <= 3) continue;
@@ -444,7 +519,7 @@
       bm: old?.bm || [],
       count: blocks.length
     };
-    await DB.putContent({ id, blocks });
+    await DB.putContent({ id, blocks, v: 2 });
     await DB.putMeta(meta);
   }
 
@@ -485,9 +560,15 @@
   async function openBook(id) {
     busy(true, '책을 펼치는 중이에요');
     try {
-      const [meta, content] = await Promise.all([DB.getMeta(id), DB.getContent(id)]);
-      if (!meta || !content) throw new Error('책 정보를 찾을 수 없어요');
-      book = { ...meta, bm: meta.bm || [], blocks: content.blocks };
+      const [rawMeta, content] = await Promise.all([DB.getMeta(id), DB.getContent(id)]);
+      if (!rawMeta || !content) throw new Error('책 정보를 찾을 수 없어요');
+      const up = upgradeContent(rawMeta, content);
+      if (up.changed) {
+        await DB.putContent({ id, blocks: up.blocks, v: 2 });
+        await DB.putMeta(up.meta);
+      }
+      const meta = up.meta;
+      book = { ...meta, bm: meta.bm || [], blocks: up.blocks };
       heads = [];
       book.blocks.forEach((b, i) => { if (b.t === 'h') heads.push(i); });
       renderBook();
@@ -533,7 +614,7 @@
       const el = document.createElement(b.t === 'h' ? 'h2' : 'p');
       el.textContent = b.x;
       if (b.t === 'h') el.className = `ch l${b.l || 2}${b.syn ? ' syn' : ''}`;
-      else if (/^[“"‘'「『]/.test(b.x)) el.className = 'dlg';
+      else if (b.d) el.className = 'dlg';
       frag.appendChild(el);
     });
     $('#text').replaceChildren(frag); // 자식 요소 순서 == 블록 인덱스

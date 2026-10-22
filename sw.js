@@ -1,6 +1,6 @@
 /* 서재 · 서비스 워커 (오프라인 지원)
  * 배포할 때마다 CACHE 값을 올려 주세요. 올리면 기기가 새 버전을 받아요. */
-const CACHE = 'seoga-reader-v1.3.1';
+const CACHE = 'seoga-reader-v1.3.2';
 const SCOPE = self.registration.scope;
 
 const SHELL = [
